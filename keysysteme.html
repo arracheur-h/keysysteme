@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clé d'accès</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #0a0a0a;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #222;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 2em;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        p {
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .key-box {
+            background: #1a1a1a;
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .key-text {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            color: #00ff88;
+            font-weight: bold;
+            user-select: all;
+            word-break: break-all;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #000000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 25px rgba(0, 255, 136, 0.5);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 35px rgba(0, 255, 136, 0.8);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            color: #00ff88;
+            font-weight: bold;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 1.1em;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+        }
+
+        .success-message.show {
+            opacity: 1;
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🔑</div>
+        <h1>Clé d'accès</h1>
+        <p>Copiez la clé ci-dessous</p>
+        
+        <div class="key-box">
+            <div class="key-text" id="keyText">arracheur2_92i</div>
+        </div>
+        
+        <button class="copy-btn" onclick="copyKey()">
+            📋 Copier la clé
+        </button>
+        
+        <div class="success-message" id="successMessage">
+            ✓ Clé copiée avec succès !
+        </div>
+    </div>
+
+    <script>
+        function copyKey() {
+            const keyText = document.getElementById('keyText').textContent;
+            const successMessage = document.getElementById('successMessage');
+            
+            navigator.clipboard.writeText(keyText).then(() => {
+                successMessage.classList.add('show');
+                
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                // Fallback pour les navigateurs plus anciens
+                const textArea = document.createElement('textarea');
+                textArea.value = keyText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                successMessage.classList.add('show');
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
